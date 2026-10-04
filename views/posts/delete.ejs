@@ -1,0 +1,5 @@
+<%- include('../partials/head') %>
+<main id="main" class="container centered-main">
+  <section class="confirmation-card"><p class="eyebrow">ONE LAST CHECK</p><h1>Close this chapter?</h1><p>You’re about to delete <strong>“<%= post.title %>”</strong>. This permanently removes the story from the journal.</p><form method="post" action="/posts/<%= post._id %>"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="_method" value="DELETE"><div class="confirmation-actions"><a class="button button-outline" href="/posts/<%= post._id %>">Keep story</a><button class="button button-danger" type="submit">Delete story</button></div></form></section>
+</main>
+<%- include('../partials/footer') %>

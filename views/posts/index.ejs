@@ -1,0 +1,42 @@
+<%- include('../partials/head') %>
+<main id="main" class="container journal-main">
+  <section class="journal-intro" aria-labelledby="journal-heading">
+    <div><p class="eyebrow"><span class="little-line"></span> THE MARGIN JOURNAL</p><h1 id="journal-heading">Good ideas deserve<br>a little <em>space.</em></h1></div>
+    <div class="intro-aside"><span class="asterisk" aria-hidden="true">✳</span><p>Notes on building, designing,<br>and everything in between.</p></div>
+  </section>
+  <section class="stories-section" aria-labelledby="stories-heading">
+    <div class="section-topline"><h2 id="stories-heading"><%= q ? 'Search results' : category ? category + ' stories' : 'Latest stories' %><span class="count"><%= total %></span></h2><span class="edition-label">A COLLECTION OF PERSPECTIVES</span></div>
+    <div class="collection-toolbar">
+      <nav class="category-nav" aria-label="Story categories">
+        <a class="category-link <%= !category ? 'selected' : '' %>" href="<%= listUrl({ category: '', page: '' }) %>" <%- !category ? 'aria-current="true"' : '' %>>All stories</a>
+        <% for (const item of categories) { %><a class="category-link <%= category === item ? 'selected' : '' %>" href="<%= listUrl({ category: item, page: '' }) %>" <%- category === item ? 'aria-current="true"' : '' %>><%= item %></a><% } %>
+      </nav>
+      <form class="search-form" action="/posts" method="get" role="search">
+        <% if (category) { %><input type="hidden" name="category" value="<%= category %>"><% } %>
+        <label class="sr-only" for="search">Search stories</label>
+        <input id="search" name="q" type="search" placeholder="Search stories…" value="<%= q %>" maxlength="100">
+        <button type="submit" aria-label="Search"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+      </form>
+    </div>
+    <% if (q) { %><p class="search-summary"><%= total %> <%= total === 1 ? 'story' : 'stories' %> for “<%= q %>” <a href="<%= listUrl({ q: '', page: '' }) %>">Clear search</a></p><% } %>
+    <% if (posts.length) { %>
+      <div class="story-grid">
+        <% posts.forEach((post, index) => { %>
+          <article class="story-card">
+            <a class="cover-link" href="/posts/<%= post._id %>" tabindex="-1" aria-hidden="true"><%- include('../partials/cover', { post }) %></a>
+            <div class="story-details">
+              <div class="story-meta"><span class="category-text"><%= post.category %></span><span class="meta-divider">/</span><span><%= readTime(post.content) %> min read</span></div>
+              <h3><a href="/posts/<%= post._id %>"><%= post.title %></a></h3>
+              <p class="story-excerpt"><%= post.excerpt %></p>
+              <div class="author-line"><span class="avatar" aria-hidden="true"><%= initials(post.author) %></span><span class="author-name"><%= post.author %></span><time datetime="<%= new Date(post.createdAt).toISOString() %>"><%= formatDate(post.createdAt) %></time></div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+      <% if (pages > 1) { %><nav class="pagination" aria-label="Pagination"><% if (page > 1) { %><a class="button button-outline" href="<%= listUrl({ page: String(page - 1) }) %>">Previous</a><% } %><span>Page <%= page %> of <%= pages %></span><% if (page < pages) { %><a class="button button-outline" href="<%= listUrl({ page: String(page + 1) }) %>">Next</a><% } %></nav><% } %>
+    <% } else { %>
+      <div class="empty-state"><span class="empty-mark" aria-hidden="true">M.</span><h3><%= q || category ? 'No stories here just yet.' : 'Your first story starts here.' %></h3><p><%= q || category ? 'Try a different search or explore the rest of the journal.' : 'Give that idea a title, find the words, and make a little space for it.' %></p><a class="button button-dark" href="<%= q || category ? '/posts' : '/posts/new' %>"><%= q || category ? 'View all stories' : 'Write a story' %></a></div>
+    <% } %>
+  </section>
+</main>
+<%- include('../partials/footer') %>

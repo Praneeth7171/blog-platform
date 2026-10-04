@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="<%= description %>">
+  <meta name="theme-color" content="#2448e8">
+  <title><%= title %> · Margin</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="/posts" aria-label="Margin home">margin<span class="brand-dot">.</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-journal <%= currentPath === '/posts' ? 'active' : '' %>" href="/posts" <%- currentPath === '/posts' ? 'aria-current="page"' : '' %>>The journal</a>
+        <a class="button button-dark button-small" href="/posts/new"><span class="plus" aria-hidden="true">+</span> Write a story</a>
+      </nav>
+    </div>
+  </header>
+  <% if (notice) { %><div class="container"><div class="notice" role="status"><span aria-hidden="true">✓</span> <%= notice %><button type="button" data-dismiss-notice aria-label="Dismiss notification">×</button></div></div><% } %>

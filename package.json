@@ -1,0 +1,35 @@
+{
+  "name": "margin-blog-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A responsive blog built with Node.js, Express, EJS, and MongoDB.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "demo": "node src/server.js --demo",
+    "demo:dev": "node --watch src/server.js --demo",
+    "seed": "node scripts/seed.js",
+    "test": "node --test --test-isolation=none --test-concurrency=1 test/*.test.js",
+    "test:mongo": "node --test --test-isolation=none test/mongo.integration.js",
+    "check": "node scripts/check.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "marked": "^16.4.1",
+    "mongoose": "^9.0.0",
+    "sanitize-html": "^2.17.0"
+  },
+  "devDependencies": {
+    "acorn": "^8.15.0",
+    "mongodb-memory-server": "^10.3.0",
+    "supertest": "^7.1.4"
+  }
+}
